@@ -6,8 +6,25 @@ on:
       - master
 
 jobs:
+  find-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tagger.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v2
+        with:
+          include: 'v*'
+          exclude: '*-rc*'
+          commit-ish: 'HEAD'
+          abbrev: false
+
   publish-release:
     name: release
+    needs: [find-tag]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,4 +39,4 @@ jobs:
         with:
           files: Release.txt
           #generate_release_notes: true
-          name: Snapshot Release
+          name: Snapshot Release ${{ needs.find-tag.outputs.tag }}
