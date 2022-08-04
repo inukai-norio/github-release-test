@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish-release:
-    name: publish ${{ matrix.target }}
+    name: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
