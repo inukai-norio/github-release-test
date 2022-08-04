@@ -21,4 +21,3 @@ jobs:
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           generate_release_notes: true
           name: Snapshot Release
-          files: ./build/*
